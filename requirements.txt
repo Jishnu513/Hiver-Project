@@ -1,0 +1,33 @@
+# ─── Core ────────────────────────────────────────────────────────────────────
+pydantic>=2.7,<3
+pydantic-settings>=2.3
+python-dotenv>=1.0
+
+# ─── LLM & Embeddings ────────────────────────────────────────────────────────
+litellm>=1.40
+openai>=1.30          # used by litellm under the hood
+sentence-transformers>=3.0
+torch>=2.3             # required by sentence-transformers (CPU is fine)
+
+# ─── Vector Store ────────────────────────────────────────────────────────────
+chromadb>=0.5
+sentence-transformers>=3.0
+# torch is a heavy dep — CPU-only wheel is sufficient for local embeddings:
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# ─── Data & Evaluation ───────────────────────────────────────────────────────
+pandas>=2.2
+scikit-learn>=1.5
+scipy>=1.13
+numpy>=1.26
+rouge-score>=0.1.2
+nltk>=3.8
+
+# ─── CLI & Display ───────────────────────────────────────────────────────────
+typer[all]>=0.12
+rich>=13.7
+tqdm>=4.66
+
+# ─── Testing ─────────────────────────────────────────────────────────────────
+pytest>=8.2
+pytest-mock>=3.14

@@ -1,0 +1,476 @@
+[
+  {
+    "system": "Full Agent (RAG + Policy)",
+    "n_examples": 25,
+    "intent": {
+      "macro_f1": 0.5878,
+      "classification_report": {
+        "ACCOUNT_ACCESS_AND_SECURITY": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.6666666666666666,
+          "support": 3.0
+        },
+        "BILLING_AND_SUBSCRIPTION": {
+          "precision": 0.625,
+          "recall": 1.0,
+          "f1-score": 0.7692307692307693,
+          "support": 5.0
+        },
+        "CONTENT_AND_CATALOG": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.8,
+          "support": 3.0
+        },
+        "FEATURE_REQUEST_AND_FEEDBACK": {
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.3333333333333333,
+          "support": 3.0
+        },
+        "GENERAL_INQUIRY_HOW_TO": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1-score": 0.6666666666666666,
+          "support": 2.0
+        },
+        "OUT_OF_SCOPE_OR_CHITCHAT": {
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1-score": 0.3333333333333333,
+          "support": 1.0
+        },
+        "PLAYBACK_AND_APP_BUGS": {
+          "precision": 1.0,
+          "recall": 0.375,
+          "f1-score": 0.5454545454545454,
+          "support": 8.0
+        },
+        "accuracy": 0.6,
+        "macro avg": {
+          "precision": 0.6892857142857143,
+          "recall": 0.6488095238095237,
+          "f1-score": 0.5878121878121878,
+          "support": 25.0
+        },
+        "weighted avg": {
+          "precision": 0.773,
+          "recall": 0.6,
+          "f1-score": 0.6110582750582751,
+          "support": 25.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          3,
+          0,
+          1,
+          0,
+          1,
+          3
+        ]
+      ],
+      "labels": [
+        "ACCOUNT_ACCESS_AND_SECURITY",
+        "BILLING_AND_SUBSCRIPTION",
+        "CONTENT_AND_CATALOG",
+        "FEATURE_REQUEST_AND_FEEDBACK",
+        "GENERAL_INQUIRY_HOW_TO",
+        "OUT_OF_SCOPE_OR_CHITCHAT",
+        "PLAYBACK_AND_APP_BUGS"
+      ]
+    },
+    "escalation": {
+      "escalation_precision": 0.6,
+      "escalation_recall": 0.8571,
+      "escalation_f1": 0.7059,
+      "escalation_f2_cost_weighted": 0.7895,
+      "false_negative_rate": 0.1429,
+      "false_negatives": 1
+    },
+    "response": {
+      "bleu4_mean": 0.0335,
+      "rouge_l_mean": 0.2187,
+      "n_responses_evaluated": 25
+    },
+    "operational": {
+      "avg_latency_ms": 1694.42,
+      "p95_latency_ms": 1748.78,
+      "total_tokens": 0,
+      "total_cost_usd": 0.0,
+      "cost_per_1k_queries_usd": 0.0
+    }
+  },
+  {
+    "system": "Trivial Baseline (Keywords + Macros)",
+    "n_examples": 25,
+    "intent": {
+      "macro_f1": 0.5878,
+      "classification_report": {
+        "ACCOUNT_ACCESS_AND_SECURITY": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.6666666666666666,
+          "support": 3.0
+        },
+        "BILLING_AND_SUBSCRIPTION": {
+          "precision": 0.625,
+          "recall": 1.0,
+          "f1-score": 0.7692307692307693,
+          "support": 5.0
+        },
+        "CONTENT_AND_CATALOG": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.8,
+          "support": 3.0
+        },
+        "FEATURE_REQUEST_AND_FEEDBACK": {
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.3333333333333333,
+          "support": 3.0
+        },
+        "GENERAL_INQUIRY_HOW_TO": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1-score": 0.6666666666666666,
+          "support": 2.0
+        },
+        "OUT_OF_SCOPE_OR_CHITCHAT": {
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1-score": 0.3333333333333333,
+          "support": 1.0
+        },
+        "PLAYBACK_AND_APP_BUGS": {
+          "precision": 1.0,
+          "recall": 0.375,
+          "f1-score": 0.5454545454545454,
+          "support": 8.0
+        },
+        "accuracy": 0.6,
+        "macro avg": {
+          "precision": 0.6892857142857143,
+          "recall": 0.6488095238095237,
+          "f1-score": 0.5878121878121878,
+          "support": 25.0
+        },
+        "weighted avg": {
+          "precision": 0.773,
+          "recall": 0.6,
+          "f1-score": 0.6110582750582751,
+          "support": 25.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          3,
+          0,
+          1,
+          0,
+          1,
+          3
+        ]
+      ],
+      "labels": [
+        "ACCOUNT_ACCESS_AND_SECURITY",
+        "BILLING_AND_SUBSCRIPTION",
+        "CONTENT_AND_CATALOG",
+        "FEATURE_REQUEST_AND_FEEDBACK",
+        "GENERAL_INQUIRY_HOW_TO",
+        "OUT_OF_SCOPE_OR_CHITCHAT",
+        "PLAYBACK_AND_APP_BUGS"
+      ]
+    },
+    "escalation": {
+      "escalation_precision": 1.0,
+      "escalation_recall": 0.5714,
+      "escalation_f1": 0.7273,
+      "escalation_f2_cost_weighted": 0.625,
+      "false_negative_rate": 0.4286,
+      "false_negatives": 3
+    },
+    "response": {
+      "bleu4_mean": 0.0126,
+      "rouge_l_mean": 0.1767,
+      "n_responses_evaluated": 25
+    },
+    "operational": {
+      "avg_latency_ms": 0.0,
+      "p95_latency_ms": 0.0,
+      "total_tokens": 0,
+      "total_cost_usd": 0.0,
+      "cost_per_1k_queries_usd": 0.0
+    }
+  },
+  {
+    "system": "Simple Baseline (Zero-Shot LLM)",
+    "n_examples": 25,
+    "intent": {
+      "macro_f1": 0.0212,
+      "classification_report": {
+        "ACCOUNT_ACCESS_AND_SECURITY": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "BILLING_AND_SUBSCRIPTION": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 5.0
+        },
+        "CONTENT_AND_CATALOG": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "FEATURE_REQUEST_AND_FEEDBACK": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "GENERAL_INQUIRY_HOW_TO": {
+          "precision": 0.08,
+          "recall": 1.0,
+          "f1-score": 0.14814814814814814,
+          "support": 2.0
+        },
+        "OUT_OF_SCOPE_OR_CHITCHAT": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0
+        },
+        "PLAYBACK_AND_APP_BUGS": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 8.0
+        },
+        "accuracy": 0.08,
+        "macro avg": {
+          "precision": 0.011428571428571429,
+          "recall": 0.14285714285714285,
+          "f1-score": 0.021164021164021163,
+          "support": 25.0
+        },
+        "weighted avg": {
+          "precision": 0.0064,
+          "recall": 0.08,
+          "f1-score": 0.011851851851851851,
+          "support": 25.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0
+        ]
+      ],
+      "labels": [
+        "ACCOUNT_ACCESS_AND_SECURITY",
+        "BILLING_AND_SUBSCRIPTION",
+        "CONTENT_AND_CATALOG",
+        "FEATURE_REQUEST_AND_FEEDBACK",
+        "GENERAL_INQUIRY_HOW_TO",
+        "OUT_OF_SCOPE_OR_CHITCHAT",
+        "PLAYBACK_AND_APP_BUGS"
+      ]
+    },
+    "escalation": {
+      "escalation_precision": 0.0,
+      "escalation_recall": 0.0,
+      "escalation_f1": 0.0,
+      "escalation_f2_cost_weighted": 0.0,
+      "false_negative_rate": 1.0,
+      "false_negatives": 7
+    },
+    "response": {
+      "bleu4_mean": 0.013,
+      "rouge_l_mean": 0.1663,
+      "n_responses_evaluated": 25
+    },
+    "operational": {
+      "avg_latency_ms": 0.0,
+      "p95_latency_ms": 0.0,
+      "total_tokens": 0,
+      "total_cost_usd": 0.0,
+      "cost_per_1k_queries_usd": 0.0
+    }
+  }
+]

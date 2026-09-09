@@ -1,0 +1,252 @@
+[
+  {
+    "example_id": "SPT-001",
+    "tweet_text": "My Spotify keeps pausing randomly every few minutes even with a premium account. Tried reinstalling but still happening on iPhone 13.",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Standard playback bug — self-service troubleshooting applicable.",
+    "key_points_required": ["acknowledge frustration", "suggest cache clear", "suggest log out/in", "offer further help"],
+    "reference_reply": "Hey! Sorry to hear that 😟 Try this: 1) Log out & back in 2) Delete & reinstall Spotify 3) Check iOS battery settings aren't restricting background activity. Let us know if that helps! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-002",
+    "tweet_text": "Someone hacked my Spotify account and changed my email address! I can't get back in!",
+    "ground_truth_intent": "ACCOUNT_ACCESS_AND_SECURITY",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Active account compromise — requires identity verification via secure channel. Cannot be auto-handled.",
+    "key_points_required": ["acknowledge urgency", "assure security team involvement", "do NOT ask for password", "instruct via DM"],
+    "reference_reply": "We're on it! 🔒 Account security is our priority. Please DM us so our security team can verify your identity and help you regain access safely. ^SP",
+    "is_security_risk": true, "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-003",
+    "tweet_text": "You charged me $9.99 twice this month. I need a refund immediately.",
+    "ground_truth_intent": "BILLING_AND_SUBSCRIPTION",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Refund request requires human agent with payment system access.",
+    "key_points_required": ["acknowledge the double charge", "escalate to billing team", "do NOT promise refund", "provide timeline"],
+    "reference_reply": "Hi! We're sorry about that 😟 Our billing team will look into the duplicate charge and reach out via DM. Thanks for your patience! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-004",
+    "tweet_text": "How do I set up Spotify Connect on my Sonos speaker? Can't find the option anywhere.",
+    "ground_truth_intent": "GENERAL_INQUIRY_HOW_TO",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Standard how-to question — step-by-step guidance sufficient.",
+    "key_points_required": ["confirm Spotify Connect works with Sonos", "direct to device settings", "mention same WiFi requirement"],
+    "reference_reply": "Hi! Make sure your phone and Sonos are on the same WiFi 📶 Then open Spotify → tap the speaker icon → select your Sonos device. Any trouble? ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-005",
+    "tweet_text": "Great update Spotify, love having ALL my downloaded songs deleted automatically 🙄",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Sarcastic complaint about offline downloads deletion — troubleshootable.",
+    "key_points_required": ["detect sarcasm/frustration", "acknowledge the issue empathetically", "explain auto-download limits", "guide re-download"],
+    "reference_reply": "Oh no, we're so sorry! 😟 Downloads can auto-remove if you run out of storage or if they expired offline. Go to Your Library → Downloads to re-sync. ^SP",
+    "is_sarcastic": true, "is_multi_intent": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-006",
+    "tweet_text": "why is it broken",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Ambiguous but likely a technical issue — request clarification.",
+    "key_points_required": ["acknowledge", "ask for more details about the issue", "mention device/OS"],
+    "reference_reply": "Hey! Sorry to hear that 😕 Could you tell us a bit more — what's happening exactly and which device are you on? We'll get it sorted! ^SP",
+    "is_ambiguous": true, "is_multi_intent": false, "is_sarcastic": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-007",
+    "tweet_text": "The new desktop redesign is absolutely terrible. Bring back the old layout please. Nobody asked for this.",
+    "ground_truth_intent": "FEATURE_REQUEST_AND_FEEDBACK",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "UI feedback — acknowledge and direct to community idea exchange.",
+    "key_points_required": ["empathise with frustration about UI change", "acknowledge feedback is heard", "direct to community.spotify.com"],
+    "reference_reply": "We hear you! 🙏 UI changes are tough. Your feedback really matters — share your thoughts at community.spotify.com where our product team actively reads ideas! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-008",
+    "tweet_text": "Some songs in a playlist are greyed out on my account but work fine when I'm not logged in. Explicit filter is off.",
+    "ground_truth_intent": "CONTENT_AND_CATALOG",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Regional licensing/content availability issue — explainable via FAQ.",
+    "key_points_required": ["explain regional licensing", "confirm explicit filter is already off", "suggest checking account country setting"],
+    "reference_reply": "Hi! Greyed-out tracks are usually due to regional licensing 🌍 Check your account country: Account → Profile → Country. Any mismatch? Let us know! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-009",
+    "tweet_text": "App crashes AND you guys charged me twice this month. What is happening with your service??",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Multi-intent: billing dispute (refund needed) + app bug. Billing issue forces escalation.",
+    "key_points_required": ["acknowledge both issues", "escalate billing part to human", "provide crash troubleshooting as interim"],
+    "reference_reply": "So sorry for the double trouble 😟 For the billing, our team will DM you shortly. Meanwhile for crashes: reinstall Spotify + clear cache. ^SP",
+    "is_multi_intent": true, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-010",
+    "tweet_text": "lol spotify when are you releasing hi-fi quality audio?? been waiting forever",
+    "ground_truth_intent": "FEATURE_REQUEST_AND_FEEDBACK",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Feature inquiry — acknowledge and direct to community forum.",
+    "key_points_required": ["acknowledge hi-fi request", "direct to community.spotify.com", "keep tone friendly"],
+    "reference_reply": "Ha, we feel the excitement! 🎶 We can't share specifics, but your voice matters. Drop your thoughts at community.spotify.com! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-011",
+    "tweet_text": "I need to speak to a real human agent about my account issues, not a bot.",
+    "ground_truth_intent": "ACCOUNT_ACCESS_AND_SECURITY",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Explicit request for human agent — must be respected immediately.",
+    "key_points_required": ["confirm escalating to human", "set expectation on response time", "provide DM instruction"],
+    "reference_reply": "Of course! 💙 A member of our support team will reach out to you via DM shortly. Thanks for your patience! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-012",
+    "tweet_text": "Bluetooth keeps disconnecting from my car every time a new song starts playing. Galaxy S23.",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Bluetooth connectivity bug — device-specific troubleshooting available.",
+    "key_points_required": ["acknowledge Bluetooth issue", "suggest forget+re-pair Bluetooth", "mention Android battery optimization as possible cause"],
+    "reference_reply": "Ugh, that's frustrating! 😤 Try: 1) Forget & re-pair Bluetooth in your S23 settings 2) Disable battery optimization for Spotify. Does that help? ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-013",
+    "tweet_text": "I cancelled my Premium subscription but you're still charging me. This is fraud.",
+    "ground_truth_intent": "BILLING_AND_SUBSCRIPTION",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Post-cancellation charge reported as fraud — requires billing team investigation.",
+    "key_points_required": ["take the fraud claim seriously", "escalate to billing team urgently", "do NOT dismiss the concern"],
+    "reference_reply": "We're really sorry to hear this 😔 This needs immediate attention from our billing team. Please DM us your account email so we can investigate urgently. ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-014",
+    "tweet_text": "How do I enable the crossfade feature between songs? Can't find it in settings.",
+    "ground_truth_intent": "GENERAL_INQUIRY_HOW_TO",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Simple how-to question — settings navigation guidance sufficient.",
+    "key_points_required": ["confirm crossfade exists", "give navigation path: Settings > Playback > Crossfade", "mention adjustable slider"],
+    "reference_reply": "Easy! Go to: Home → Settings (gear ⚙️) → Playback → Crossfade. You can adjust the crossfade duration from 1–12 seconds. 🎵 ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-015",
+    "tweet_text": "The Spotify app on my MacBook freezes completely whenever I try to play a local file. Latest version installed.",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Local file playback bug on macOS — standard desktop troubleshooting applies.",
+    "key_points_required": ["acknowledge local file bug", "suggest clearing local files cache", "mention checking macOS permissions for local file access"],
+    "reference_reply": "Hi! For local files freezing on Mac: 1) Go to Settings → Local Files → toggle off/on 2) Reinstall Spotify via the website (not App Store). Better? ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-016",
+    "tweet_text": "just vibing to some good music today 🎶 Spotify is life",
+    "ground_truth_intent": "OUT_OF_SCOPE_OR_CHITCHAT",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Chitchat/positive mention — no actionable support issue. Route for archival.",
+    "key_points_required": ["friendly acknowledgment", "no troubleshooting needed"],
+    "reference_reply": "Love to hear it! 🎵 Keep those good vibes going! Let us know if you ever need anything. ^SP",
+    "is_out_of_scope": true, "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false
+  },
+  {
+    "example_id": "SPT-017",
+    "tweet_text": "My student discount verification keeps failing even though I'm enrolled. Third time trying.",
+    "ground_truth_intent": "BILLING_AND_SUBSCRIPTION",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Student verification issue — standard re-verification flow applicable.",
+    "key_points_required": ["acknowledge repeated failure frustration", "recommend re-verifying via SheerID", "suggest clearing browser cache during verification"],
+    "reference_reply": "Hey! Sorry for the trouble 😟 Try verifying again at spotify.com/student using a fresh incognito browser window. Still failing? DM us your school name! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-018",
+    "tweet_text": "Podcast episodes aren't downloading offline. I have Premium and enough storage. Very annoying.",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Offline podcast download failure — specific troubleshooting steps available.",
+    "key_points_required": ["acknowledge premium offline entitlement", "suggest removing + re-adding podcast", "mention WiFi-only download setting"],
+    "reference_reply": "Hi! Try this: 1) Remove the podcast from your library 2) Re-add & download while on WiFi 3) Check Settings → Data Saver isn't blocking it. ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-019",
+    "tweet_text": "suspicious login alert from Russia. i'm in india. what do i do",
+    "ground_truth_intent": "ACCOUNT_ACCESS_AND_SECURITY",
+    "ground_truth_action": "ESCALATE_TO_HUMAN",
+    "ground_truth_escalation_reason": "Active suspicious foreign login — critical security risk requiring immediate human intervention.",
+    "key_points_required": ["treat as urgent security incident", "instruct to change password immediately", "escalate to security team via DM"],
+    "reference_reply": "Please change your password RIGHT NOW at spotify.com/account 🔒 Then DM us immediately so our security team can secure your account. ^SP",
+    "is_security_risk": true, "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-020",
+    "tweet_text": "Songs I added to my playlist yesterday are gone today. Did someone else edit it?",
+    "ground_truth_intent": "CONTENT_AND_CATALOG",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Playlist sync issue — explainable via collaborative playlist settings.",
+    "key_points_required": ["check if playlist is collaborative", "suggest checking playlist activity log", "rule out accidental deletion"],
+    "reference_reply": "That's odd! Check if your playlist is set to 'Collaborative' — others can edit those. Tap the 3 dots → Collaborative Playlist to toggle. ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-021",
+    "tweet_text": "Can't play music on my Echo device anymore after Spotify update last week.",
+    "ground_truth_intent": "PLAYBACK_AND_APP_BUGS",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Alexa/Echo integration issue post-update — reconnection steps available.",
+    "key_points_required": ["acknowledge the regression post-update", "suggest relinking Alexa skill", "mention relinking in Alexa app"],
+    "reference_reply": "Sorry about that! Try relinking: Alexa App → Skills → Spotify → Disable → Re-enable. Make sure both apps are updated. Still broken? ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-022",
+    "tweet_text": "I want to cancel my premium but can't find where to do it in the app.",
+    "ground_truth_intent": "BILLING_AND_SUBSCRIPTION",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Cancellation how-to — simple navigation guidance, no agent access needed.",
+    "key_points_required": ["give direct cancellation URL", "mention it must be done on web not app", "confirm immediate effect or end of billing cycle"],
+    "reference_reply": "Hi! Cancellation is done on the web: go to spotify.com/account → Your Plan → Cancel. It stays active until the end of your billing period. ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-023",
+    "tweet_text": "Your app is garbage and always has been garbage. Switching to Apple Music.",
+    "ground_truth_intent": "FEATURE_REQUEST_AND_FEEDBACK",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Negative emotional rant — no specific issue to resolve, empathetic acknowledgment appropriate.",
+    "key_points_required": ["do NOT be defensive", "acknowledge frustration genuinely", "invite them to share specific issues"],
+    "reference_reply": "We're really sorry to hear that 😔 We'd love to know what's been going wrong so we can improve. What's been the biggest issue for you? ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-024",
+    "tweet_text": "Lyrics aren't syncing with the song. They're like 5 seconds behind the music.",
+    "ground_truth_intent": "CONTENT_AND_CATALOG",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Lyrics sync bug — known issue with standard workaround.",
+    "key_points_required": ["acknowledge the lyrics sync lag", "suggest closing and reopening the lyrics view", "mention reporting via in-app feedback"],
+    "reference_reply": "Annoying one, sorry! 😅 Try closing the lyrics view and reopening it. If it's song-specific, flag it with in-app feedback (3 dots → Report). ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  },
+  {
+    "example_id": "SPT-025",
+    "tweet_text": "My family plan invite link is expired. I sent it 3 days ago and my partner can't join.",
+    "ground_truth_intent": "BILLING_AND_SUBSCRIPTION",
+    "ground_truth_action": "AUTO_HANDLE",
+    "ground_truth_escalation_reason": "Family plan invite expiry — re-send process is standard self-service.",
+    "key_points_required": ["explain invite links expire in 24 hours", "instruct to resend from account settings", "mention 6-member limit check"],
+    "reference_reply": "Hi! Invite links expire after 24 hours 😊 Go to spotify.com/family → Manage Plan → Resend invite. Make sure you haven't hit the 6-member limit! ^SP",
+    "is_multi_intent": false, "is_sarcastic": false, "is_ambiguous": false, "is_security_risk": false, "is_out_of_scope": false
+  }
+]
