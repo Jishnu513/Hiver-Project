@@ -18,13 +18,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
-# Hugging Face Spaces requires port 7860
 # AGENT_MODE=mock means demo works without any API keys
 ENV PYTHONUNBUFFERED=1
 ENV AGENT_MODE=mock
-ENV PORT=7860
+ENV PORT=8000
 
-EXPOSE 7860
+EXPOSE 8000
 
-# Use 2 workers for better responsiveness on HF Spaces
-CMD ["uvicorn", "src.ui_server:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "1", "--timeout-keep-alive", "75"]
+CMD ["uvicorn", "src.ui_server:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--timeout-keep-alive", "75"]

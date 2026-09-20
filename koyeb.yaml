@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  koyeb.yaml — Koyeb 1-click deployment configuration
+#  Free tier: 1 service, always-on, no cold starts, 512MB RAM
+# ─────────────────────────────────────────────────────────────────────────────
+
+app:
+  name: spotify-support-agent
+
+services:
+  - name: web
+    type: web
+
+    # Build from GitHub repo using the Dockerfile
+    git:
+      repository: github.com/Jishnu513/Hiver-Project
+      branch: main
+
+    # Use the Dockerfile at root
+    build:
+      dockerfile: Dockerfile
+
+    # Port the app listens on
+    ports:
+      - port: 8000
+        protocol: http
+
+    # Health check endpoint
+    health_checks:
+      - path: /api/status
+        port: 8000
+        interval: 10s
+        timeout: 5s
+
+    # Instance size (free tier)
+    instance_type: free
+
+    # Environment variables (safe defaults — override secrets in Koyeb dashboard)
+    env:
+      - key: AGENT_MODE
+        value: mock
+      - key: EMBEDDING_PROVIDER
+        value: local
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RAG_TOP_K
+        value: "5"
+      - key: AUTO_HANDLE_CONFIDENCE_THRESHOLD
+        value: "0.75"
+      - key: MAX_REPLY_CHARS
+        value: "280"
+      # Add your API key in Koyeb dashboard → Environment → Secret
+      # - key: GEMINI_API_KEY
+      #   value: YOUR_KEY_HERE
+      # - key: AGENT_MODEL
+      #   value: gemini/gemini-1.5-flash
