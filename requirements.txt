@@ -7,7 +7,7 @@ python-dotenv>=1.0
 litellm>=1.40
 openai>=1.30          # used by litellm under the hood
 sentence-transformers>=3.0
-torch>=2.3             # required by sentence-transformers (CPU is fine)
+# torch is installed separately in Dockerfile with CPU-only wheel to save space
 
 # ─── Vector Store ────────────────────────────────────────────────────────────
 chromadb>=0.5
