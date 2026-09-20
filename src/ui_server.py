@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
+from contextlib import asynccontextmanager
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
@@ -27,10 +28,24 @@ from src.retriever import collection_size
 
 logger = logging.getLogger(__name__)
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Pre-warm pipeline, classifier, and vector retriever on server startup."""
+    logger.info("⚡ Pre-warming Spotify Support AI pipeline...")
+    try:
+        run_pipeline("Spotify app crashing on Android", tweet_id="warmup-init")
+        logger.info("✅ Pipeline successfully pre-warmed and ready!")
+    except Exception as e:
+        logger.warning(f"Pipeline warmup notice: {e}")
+    yield
+
+
 app = FastAPI(
     title="Spotify AI Support Agent — Dashboard",
     description="Interactive Web UI and API for the Spotify Customer Support Agent pipeline.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
