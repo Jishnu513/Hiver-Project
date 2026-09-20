@@ -91,8 +91,9 @@ _MOCK_REPLIES: dict[Intent, str] = {
         "Let us know if a specific song is missing! ^SP"
     ),
     Intent.FEATURE_REQUEST_AND_FEEDBACK: (
-        "Thanks for the feedback! 🙏 We're always working to improve Spotify. "
-        "Share your idea at community.spotify.com — our product team reads every post! ^SP"
+        "That sounds really frustrating and we hear you 😔 This isn't the "
+        "experience we want for you. Share your feedback at community.spotify.com "
+        "— our team reads every post! ^SP"
     ),
     Intent.GENERAL_INQUIRY_HOW_TO: (
         "Happy to help! 😊 Check our step-by-step guide at support.spotify.com — "
@@ -105,6 +106,13 @@ _MOCK_REPLIES: dict[Intent, str] = {
         "via DM! ^SP"
     ),
 }
+
+# Dedicated reply for sarcastic tweets — acknowledge the frustration directly
+_SARCASM_MOCK_REPLY = (
+    "We hear your frustration and we're really sorry this happened 😞 "
+    "That's definitely not the experience we want for you. "
+    "Could you DM us your details so we can look into it? ^SP"
+)
 
 _DEFAULT_MOCK_REPLY = (
     "Hey! Thanks for reaching out 🎵 We'd love to help sort this out. "
@@ -173,8 +181,12 @@ def generate_reply(
         msg = _ESCALATION_TEMPLATES.get(classification.intent, _DEFAULT_ESCALATION_MSG)
         return msg, 0.0, 0
 
-    # MOCK mode — return canned intent-specific reply
+    # MOCK mode — use sarcasm-aware canned reply selection
     if settings.agent_mode == AgentMode.MOCK:
+        # Check if tweet contains sarcasm signals for a more empathetic reply
+        from src.classifier import _is_sarcastic  # noqa: PLC0415
+        if _is_sarcastic(tweet_text.lower()):
+            return _truncate(_SARCASM_MOCK_REPLY), 0.0, 0
         reply = _MOCK_REPLIES.get(classification.intent, _DEFAULT_MOCK_REPLY)
         return _truncate(reply), 0.0, 0
 

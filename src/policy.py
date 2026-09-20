@@ -27,10 +27,21 @@ from src.models import (
 # Keyword indicators for hard escalation rules
 # ─────────────────────────────────────────────────────────────────────────────
 
-_SECURITY_KEYWORDS = frozenset([
-    "hack", "hacked", "compromised", "stolen account", "someone else logged",
-    "unauthorized access", "identity theft", "phishing", "suspicious login",
-    "2fa bypass", "two factor", "account taken",
+# Word-boundary patterns for single-word security keywords (prevents matching inside longer words)
+# e.g. "hack" should NOT match "hackathon"
+_SECURITY_WORD_PATTERNS = [
+    re.compile(r'\bhack(?:ed)?\b', re.IGNORECASE),
+    re.compile(r'\bcompromised\b', re.IGNORECASE),
+    re.compile(r'\bphishing\b', re.IGNORECASE),
+    re.compile(r'\bunauthorized\s+(?:access|login|sign.?in)\b', re.IGNORECASE),
+    re.compile(r'\bidentity\s+theft\b', re.IGNORECASE),
+    re.compile(r'\b2fa\s+bypass\b', re.IGNORECASE),
+]
+
+# Exact multi-word phrases that are specific enough without regex
+_SECURITY_PHRASES = frozenset([
+    "stolen account", "someone else logged", "suspicious login",
+    "two factor", "account taken", "account stolen",
 ])
 
 _BILLING_ESCALATION_KEYWORDS = frozenset([
@@ -55,10 +66,13 @@ def _rule_security_threat(
 ) -> EscalationDecision | None:
     """CRITICAL: Any security-related issue must be escalated immediately."""
     lower = tweet_text.lower()
-    if (
+    # Use word-boundary regex for single words to prevent false positives
+    security_match = (
         classification.intent == Intent.ACCOUNT_ACCESS_AND_SECURITY
-        or any(kw in lower for kw in _SECURITY_KEYWORDS)
-    ):
+        or any(p.search(lower) for p in _SECURITY_WORD_PATTERNS)
+        or any(phrase in lower for phrase in _SECURITY_PHRASES)
+    )
+    if security_match:
         return EscalationDecision(
             action=Action.ESCALATE_TO_HUMAN,
             reason=(

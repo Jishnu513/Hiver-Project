@@ -1335,7 +1335,14 @@ Incoming Customer Tweet<br>
     function renderResults(data, latency) {
       if (!data) return;
       const latencyBadge = document.getElementById('latency-badge');
-      if (latencyBadge) latencyBadge.textContent = `Latency: ${latency || 0} ms`;
+      if (latencyBadge) {
+        const ms = latency || 0;
+        const coldStart = ms > 5000 ? ' ⚡ Cold start' : '';
+        latencyBadge.textContent = `Latency: ${ms} ms${coldStart}`;
+        latencyBadge.title = ms > 5000
+          ? 'First request after inactivity — Render free-tier is warming up. Subsequent requests will be fast.'
+          : 'Pipeline processing time';
+      }
 
       const banner = document.getElementById('decision-banner');
       const actionTitle = document.getElementById('decision-action');
@@ -1377,14 +1384,33 @@ Incoming Customer Tweet<br>
       if (statSentiment) statSentiment.textContent = data.sentiment || 'neutral';
 
       const policyRule = document.getElementById('policy-rule');
-      const reasonStr = data.escalation_reason || 'default auto-handle';
+      const reasonStr = data.escalation_reason || '';
+      const policyBox = document.querySelector('.policy-box');
+
       if (policyRule) {
-        const rulePrefix = reasonStr.includes('|') ? reasonStr.split('|')[0].trim() : 'POLICY';
-        policyRule.textContent = `POLICY: ${rulePrefix}`;
+        if (!isAutoHandle && reasonStr.includes('|')) {
+          // Only show named rule when an escalation policy actually fired
+          const rulePrefix = reasonStr.split('|')[0].trim();
+          policyRule.textContent = `POLICY: ${rulePrefix}`;
+          policyRule.style.color = 'var(--danger-red)';
+          if (policyBox) policyBox.style.borderColor = 'rgba(233, 20, 41, 0.3)';
+        } else if (isAutoHandle) {
+          // AUTO_HANDLE: show clean default message — no escalation rule fired
+          policyRule.textContent = 'POLICY: (default auto-handle)';
+          policyRule.style.color = 'var(--spotify-green)';
+          if (policyBox) policyBox.style.borderColor = 'rgba(29, 185, 84, 0.2)';
+        } else {
+          policyRule.textContent = `POLICY: ${reasonStr.split('|')[0].trim() || 'escalation triggered'}`;
+          policyRule.style.color = 'var(--warning-amber)';
+        }
       }
 
       const policyReason = document.getElementById('policy-reason');
-      if (policyReason) policyReason.textContent = reasonStr;
+      if (policyReason) {
+        policyReason.textContent = reasonStr
+          ? reasonStr.split('|').pop().trim()
+          : (isAutoHandle ? 'No escalation policy triggered. Routing to RAG retrieval engine.' : 'Escalation decision made.');
+      }
 
       // Drafted reply
       const reply = data.drafted_reply || '(No reply drafted — ticket routed directly to human support desk)';

@@ -54,8 +54,9 @@ _INTENT_PATTERNS: list[tuple[Intent, list[str]]] = [
     ]),
     (Intent.FEATURE_REQUEST_AND_FEEDBACK, [
         "feature", "request", "wish", "should add", "please add", "bring back",
-        "update", "new design", "new layout", "hate the new", "love the old",
-        "ui", "ux", "interface", "idea",
+        "new design", "new layout", "hate the new", "love the old",
+        "ui", "ux", "interface", "idea", "sarcasm", "automatically deleted",
+        "thanks for nothing", "great job breaking", "love how you",
     ]),
     (Intent.GENERAL_INQUIRY_HOW_TO, [
         "how to", "how do i", "how can i", "how do you", "steps", "guide",
@@ -73,22 +74,41 @@ _SENTIMENT_PATTERNS = {
                                "brilliant", "perfect", "excellent", "thanks"],
 }
 
+# Signals that the tweet is sarcastic — override positive sentiment and bias to FEATURE_REQUEST
+_SARCASM_SIGNALS = [
+    "sarcasm", "(sarcasm)", "🙄", "thanks for nothing", "love how you",
+    "great job", "love having", "automatically deleted", "genius update",
+    "wow thanks", "oh great", "just what i wanted",
+]
+
 _URGENCY_ESCALATION_KEYWORDS = {
     "hack", "hacked", "compromised", "stolen", "unauthorized charge",
     "legal action", "fraud", "identity theft",
 }
 
 
+def _is_sarcastic(lower: str) -> bool:
+    """Return True if the tweet contains explicit sarcasm signals."""
+    return any(signal in lower for signal in _SARCASM_SIGNALS)
+
+
 def _keyword_classify(text: str) -> ClassificationResult:
     """Fast, deterministic keyword-based classification (no API call)."""
     lower = text.lower()
+    sarcastic = _is_sarcastic(lower)
 
-    # Intent detection (first match wins based on priority order)
-    detected_intent = Intent.OUT_OF_SCOPE_OR_CHITCHAT
-    for intent, keywords in _INTENT_PATTERNS:
-        if any(kw in lower for kw in keywords):
-            detected_intent = intent
-            break
+    # If sarcasm detected, prioritise FEATURE_REQUEST before normal pattern matching
+    # because sarcastic complaints are feedback/frustration, not literal bug reports
+    if sarcastic:
+        detected_intent = Intent.FEATURE_REQUEST_AND_FEEDBACK
+        logger.debug("Sarcasm signals detected — forcing FEATURE_REQUEST_AND_FEEDBACK")
+    else:
+        # Intent detection (first match wins based on priority order)
+        detected_intent = Intent.OUT_OF_SCOPE_OR_CHITCHAT
+        for intent, keywords in _INTENT_PATTERNS:
+            if any(kw in lower for kw in keywords):
+                detected_intent = intent
+                break
 
     # Secondary intent (check remaining patterns)
     secondary = None
@@ -97,12 +117,15 @@ def _keyword_classify(text: str) -> ClassificationResult:
             secondary = intent
             break
 
-    # Sentiment
-    sentiment = SentimentLabel.NEUTRAL
-    for label, kws in _SENTIMENT_PATTERNS.items():
-        if any(kw in lower for kw in kws):
-            sentiment = label
-            break
+    # Sentiment — sarcasm overrides any positive signal
+    if sarcastic:
+        sentiment = SentimentLabel.NEGATIVE
+    else:
+        sentiment = SentimentLabel.NEUTRAL
+        for label, kws in _SENTIMENT_PATTERNS.items():
+            if any(kw in lower for kw in kws):
+                sentiment = label
+                break
 
     # Urgency
     if any(kw in lower for kw in _URGENCY_ESCALATION_KEYWORDS):
@@ -116,16 +139,19 @@ def _keyword_classify(text: str) -> ClassificationResult:
     else:
         urgency = UrgencyLevel.LOW
 
+    reasoning = (
+        f"{'Sarcasm detected → ' if sarcastic else 'Keyword match → '}"
+        f"{detected_intent.value}; "
+        f"sentiment={sentiment.value}; urgency={urgency.value}"
+    )
+
     return ClassificationResult(
         intent=detected_intent,
         confidence=0.85 if detected_intent != Intent.OUT_OF_SCOPE_OR_CHITCHAT else 0.60,
         sentiment=sentiment,
         urgency=urgency,
         secondary_intent=secondary,
-        reasoning=(
-            f"Keyword match → {detected_intent.value}; "
-            f"sentiment={sentiment.value}; urgency={urgency.value}"
-        ),
+        reasoning=reasoning,
     )
 
 
