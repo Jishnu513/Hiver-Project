@@ -12,9 +12,14 @@ from __future__ import annotations
 
 import json
 import logging
+import os
+import threading
+import time
 from pathlib import Path
 from contextlib import asynccontextmanager
 from typing import Optional
+
+import urllib.request
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,11 +33,61 @@ from src.retriever import collection_size
 
 logger = logging.getLogger(__name__)
 
+# ─── Keep-Alive Self-Ping ─────────────────────────────────────────────────────
+# Render free tier spins down after 15 min of inactivity.
+# This background thread pings /api/status every 10 min to keep the service warm.
+
+_PING_INTERVAL_SECONDS = 10 * 60  # 10 minutes
+_keep_alive_thread: threading.Thread | None = None
+
+
+def _keep_alive_worker(base_url: str) -> None:
+    """Background worker that pings the app's own health endpoint every 10 minutes."""
+    ping_url = f"{base_url.rstrip('/')}/api/status"
+    logger.info(f"[keep-alive] Starting self-ping every {_PING_INTERVAL_SECONDS // 60} min → {ping_url}")
+    while True:
+        time.sleep(_PING_INTERVAL_SECONDS)
+        try:
+            with urllib.request.urlopen(ping_url, timeout=10) as resp:  # noqa: S310
+                logger.info(f"[keep-alive] Ping OK — status {resp.status}")
+        except Exception as exc:
+            logger.warning(f"[keep-alive] Ping failed (will retry): {exc}")
+
+
+def _start_keep_alive() -> None:
+    """Start the keep-alive thread if running on Render (RENDER_EXTERNAL_URL is set)."""
+    global _keep_alive_thread
+    render_url = os.environ.get("RENDER_EXTERNAL_URL", "").strip()
+    if not render_url:
+        logger.info("[keep-alive] RENDER_EXTERNAL_URL not set — skipping self-ping (local mode).")
+        return
+    if _keep_alive_thread and _keep_alive_thread.is_alive():
+        return  # Already running
+    _keep_alive_thread = threading.Thread(
+        target=_keep_alive_worker,
+        args=(render_url,),
+        daemon=True,  # Dies automatically when main process exits
+        name="keep-alive-ping",
+    )
+    _keep_alive_thread.start()
+    logger.info(f"[keep-alive] Thread started — will ping {render_url} every 10 min")
+
+
+# ─── Lifespan ─────────────────────────────────────────────────────────────────
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # noqa: ARG001
+    """Start background keep-alive thread on startup."""
+    _start_keep_alive()
+    yield  # App runs here
+    logger.info("[lifespan] Shutting down.")
+
 
 app = FastAPI(
     title="Spotify AI Support Agent — Dashboard",
     description="Interactive Web UI and API for the Spotify Customer Support Agent pipeline.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
