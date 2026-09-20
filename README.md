@@ -1,6 +1,8 @@
 # 🎵 Spotify AI Customer Support Agent
 ### Hiver SDE Intern Take-Home Assignment
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Jishnu513/Hiver-Project)
+
 An end-to-end AI customer support agent for **@SpotifyCares** that classifies
 incoming customer tweets, drafts grounded replies, and decides whether to
 auto-handle or escalate to a human — with a full evaluation harness, two baselines,
