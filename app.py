@@ -186,5 +186,29 @@ def info() -> None:
     console.print(table)
 
 
+@app.command()
+def ui(
+    host: str = typer.Option("127.0.0.1", "--host", "-h", help="Host interface to bind"),
+    port: int = typer.Option(8000, "--port", "-p", help="Port to run the web server on"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="Do not automatically open browser"),
+) -> None:
+    """Launch the interactive Spotify Support Agent web dashboard."""
+    import webbrowser
+    import uvicorn
+
+    url = f"http://{host}:{port}"
+    console.rule("[bold green]🎵 Spotify Support Agent — Web Dashboard[/bold green]")
+    console.print(f"[white]Starting web dashboard at: [/white][bold cyan]{url}[/bold cyan]")
+    console.print("[dim]Press Ctrl+C in terminal to stop the server.[/dim]\n")
+
+    if not no_browser:
+        try:
+            webbrowser.open(url)
+        except Exception:
+            pass
+
+    uvicorn.run("src.ui_server:app", host=host, port=port, log_level="info")
+
+
 if __name__ == "__main__":
     app()

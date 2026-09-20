@@ -42,26 +42,32 @@ python app.py demo
 ```
 Expected output: Intent classification, escalation decision, drafted reply for 5 diverse tweets covering all key scenarios.
 
-### 4. Interactive Chat Mode
+### 4. Launch Interactive Web Dashboard (UI)
+```bash
+python app.py ui
+```
+Opens the Spotify Dark-Mode dashboard in your default browser at `http://127.0.0.1:8000` with 1-click test scenarios, real-time RAG context inspector, and evaluation metrics explorer.
+
+### 5. Interactive Terminal Chat Mode
 ```bash
 python app.py chat
 # Type any customer tweet and press Enter
 ```
 
-### 5. Run the Full Test Suite
+### 6. Run the Full Test Suite
 ```bash
 pytest tests/ -v
 # Expected: 36 tests, all passing in mock mode
 ```
 
-### 6. Run the Full Benchmark (All 3 Systems on Golden Eval Set)
+### 7. Run the Full Benchmark (All 3 Systems on Golden Eval Set)
 ```bash
 python -m evaluation.benchmark_runner --max-examples 25 --skip-judge
 # Full 200-example run (with judge) — requires LLM API key:
 # python -m evaluation.benchmark_runner
 ```
 
-### 7. (Optional) Build RAG Index from Kaggle Data
+### 8. (Optional) Build RAG Index from Kaggle Data
 ```bash
 # Download twcs.csv from https://www.kaggle.com/datasets/thoughtvector/customer-support-on-twitter
 python app.py index --kaggle-csv /path/to/twcs.csv --max-pairs 10000
