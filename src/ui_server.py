@@ -29,32 +29,10 @@ from src.retriever import collection_size
 logger = logging.getLogger(__name__)
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Pre-warm pipeline, classifier, and vector retriever on server startup."""
-    logger.info("⚡ Pre-warming Spotify Support AI pipeline...")
-    try:
-        from src.data_loader import load_resolution_pairs
-        from src.retriever import collection_size, index_resolution_pairs
-
-        # If ChromaDB is empty on fresh container, index bundled pairs
-        if collection_size() == 0:
-            logger.info("ChromaDB is empty on fresh container — indexing bundled 30 resolution pairs...")
-            pairs = load_resolution_pairs()
-            index_resolution_pairs(pairs)
-
-        run_pipeline("Spotify app crashing on Android", tweet_id="warmup-init")
-        logger.info("✅ Pipeline successfully pre-warmed and ready!")
-    except Exception as e:
-        logger.warning(f"Pipeline warmup notice: {e}")
-    yield
-
-
 app = FastAPI(
     title="Spotify AI Support Agent — Dashboard",
     description="Interactive Web UI and API for the Spotify Customer Support Agent pipeline.",
     version="1.0.0",
-    lifespan=lifespan,
 )
 
 app.add_middleware(
