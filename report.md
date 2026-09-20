@@ -1,6 +1,10 @@
 # AI Customer Support Agent for @SpotifyCares
 ### Technical Report — Hiver SDE Intern Assignment
 
+🌐 **Live Web Demo:** [https://spotify-ai-support-agent-gu6r.onrender.com](https://spotify-ai-support-agent-gu6r.onrender.com)  
+💻 **GitHub Repository:** [https://github.com/Jishnu513/Hiver-Project](https://github.com/Jishnu513/Hiver-Project)  
+👤 **Author:** S. Jishnu
+
 ---
 
 ## Section 1 — Problem Framing & Strategic Scope

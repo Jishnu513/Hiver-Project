@@ -1,6 +1,9 @@
 # Decision Log — AI Customer Support Agent for @SpotifyCares
 ### 12 Non-Obvious Engineering & Design Decisions
 
+🌐 **Live Web Demo:** [https://spotify-ai-support-agent-gu6r.onrender.com](https://spotify-ai-support-agent-gu6r.onrender.com)  
+💻 **GitHub Repository:** [https://github.com/Jishnu513/Hiver-Project](https://github.com/Jishnu513/Hiver-Project)  
+
 ---
 
 ## Decision 1 — Brand: @SpotifyCares over @AppleSupport or @AmazonHelp
